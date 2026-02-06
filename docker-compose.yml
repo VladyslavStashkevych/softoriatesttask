@@ -1,0 +1,12 @@
+services:
+  parser-service:
+    build:
+      context: .
+      dockerfile: Services/ParserService/Web/Dockerfile
+    ports:
+      - "5001:8080"
+    environment:
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/SoftoriaTestTaskOutbox.db
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ./infra/sqlite_data:/app/data # Maps container DB to your local machine

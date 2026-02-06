@@ -1,0 +1,6 @@
+@SoftoriaTestTask.Services.ParserService.Web_HostAddress = http://localhost:5011
+
+GET {{SoftoriaTestTask.Services.ParserService.Web_HostAddress}}/Parser/
+Accept: application/json
+
+###

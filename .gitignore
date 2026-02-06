@@ -1,0 +1,46 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+
+# .NET
+[Bb]in/
+[Oo]bj/
+*.exe
+*.dll
+*.pdb
+*.user
+*.suo
+*.sln.docstates
+
+# Docker
+.dockerignore
+
+# SQLite / Local Data
+*.db
+*.db-shm
+*.db-wal
+# Ignore the local volume folder but keep the directory structure
+infra/sqlite_data/*
+!infra/sqlite_data/.gitkeep
+
+# IDEs
+.visualstudio/
+.idea/
+.vscode/
+*.swp
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Playwright
+.playwright/
+ms-playwright/
+
+macbook
+macbook.pub
