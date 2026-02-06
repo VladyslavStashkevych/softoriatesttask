@@ -129,8 +129,8 @@ public class ParserService : IParserService, IAsyncDisposable
 
                 // send saving to database
                 await _mediator.Send(new IngestBatchCommand(currentBatch));
-                currentBatch = new List<CoinData>(200);
-                
+                currentBatch.Clear();
+                    
                 return true;
 
             case 3:

@@ -1,4 +1,47 @@
 services:
+  db:
+      image: postgres:16-alpine
+      container_name: softoriatesttask-db
+      environment:
+        POSTGRES_USER: admin
+        POSTGRES_PASSWORD: admin
+        POSTGRES_DB: softoriatesttask
+      ports:
+        - "5432:5432"
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+        - ./infra/postgres:/docker-entrypoint-initdb.d
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: softoriatesttask-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - "29092:29092"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092'
+      KAFKA_PROCESS_ROLES: 'broker,controller'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka:29093'
+      KAFKA_LISTENERS: 'PLAINTEXT://0.0.0.0:29092,CONTROLLER://0.0.0.0:29093,PLAINTEXT_HOST://0.0.0.0:9092'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+
   parser-service:
     build:
       context: .
@@ -6,7 +49,29 @@ services:
     ports:
       - "5001:8080"
     environment:
-      - ConnectionStrings__DefaultConnection=Data Source=/app/data/SoftoriaTestTaskOutbox.db
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=softoriatesttask;Username=admin;Password=admin
       - ASPNETCORE_ENVIRONMENT=Development
-    volumes:
-      - ./infra/sqlite_data:/app/data # Maps container DB to your local machine
+
+  processor-service:
+    build:
+      context: .
+      dockerfile: Services/ProcessorService/Worker/Dockerfile
+    depends_on:
+      - kafka
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=softoriatesttask;Username=admin;Password=admin
+      - Kafka__BootstrapServers=kafka:29092
+
+  consumer-service:
+    build:
+      context: .
+      dockerfile: Services/ConsumerService/Worker/Dockerfile
+    depends_on:
+      - kafka
+      - db
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=softoriatesttask;Username=admin;Password=admin;
+      - Kafka__BootstrapServers=kafka:29092
+
+volumes:
+  postgres_data:

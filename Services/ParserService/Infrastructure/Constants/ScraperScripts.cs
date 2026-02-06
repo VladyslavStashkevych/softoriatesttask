@@ -12,21 +12,24 @@ internal static class ScraperScripts
 
             for (const row of rows) {
                 const rankEl = row.querySelector('.cmc-table__cell--sort-by__rank');
-                const nameEl = row.querySelector('.cmc-table__column-name--name');
+                const nameEl = row.querySelector('.cmc-table__cell--sort-by__name');
                 const symbEl = row.querySelector('.cmc-table__cell--sort-by__symbol');
+                const pricEl = row.querySelector('.cmc-table__cell--sort-by__price');
                 const mCapEl = row.querySelector('.cmc-table__cell--sort-by__market-cap');
                 const voluEl = row.querySelector('.cmc-table__cell--sort-by__volume-24-h');
                 const chanEl = row.querySelector('.cmc-table__cell--sort-by__percent-change-24-h');
 
                 // loaded rows only
                 if (rankEl && nameEl && mCapEl && mCapEl.innerText.trim() !== '') {
-                const marketCap = mCapEl.innerText.replace(/[$,?-]/g, '').trim();
-                const volume24h = voluEl.innerText.replace(/[$,?-]/g, '').trim();
+                const price = pricEl.innerText.replace(/[$,?-<>]/g, '').trim();
+                const marketCap = mCapEl.innerText.replace(/[$,?-<>]/g, '').trim();
+                const volume24h = voluEl.innerText.replace(/[$,?-<>]/g, '').trim();
                 const change24h = chanEl.innerText.replace(/[,?%<>-]/g, '').trim();
                     batch.push({
                         rank: rankEl.innerText.trim(),
                         name: nameEl.innerText.trim(),
                         symbol: symbEl.innerText.trim(),
+                        price: pricEl.innerText.trim(),
                         marketCap: marketCap == '' ? '0' : marketCap,
                         volume24h: volume24h == '' ? '0' : volume24h,
                         change24h: change24h == '' ? '0' : change24h

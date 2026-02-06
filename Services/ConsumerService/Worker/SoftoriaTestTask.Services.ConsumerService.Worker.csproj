@@ -4,16 +4,16 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-SoftoriaTestTask.Services.ProcessorService.Worker-e2cce595-dd0a-428e-861f-b2aba5000c7e</UserSecretsId>
+    <UserSecretsId>dotnet-SoftoriaTestTask.Services.ConsumerService.Worker-ca2fffae-cc43-4d6a-9e84-a27c9a7a997c</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.23" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Domain\SoftoriaTestTask.Shared.Domain.csproj" />
     <ProjectReference Include="..\..\..\Shared\Infrastructure\SoftoriaTestTask.Shared.Infrastructure.csproj" />
-    <ProjectReference Include="..\Infrastructure\SoftoriaTestTask.Services.ProcessorService.Infrastructure.csproj" />
+    <ProjectReference Include="..\Infrastructure\SoftoriaTestTask.Services.ConsumerService.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Playwright;
 using SoftoriaTestTask.Services.ParserService.Application.Commands;
@@ -16,8 +15,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         
         builder.Services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") 
-                              ?? "Data Source=outbox.db"));
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
         
         builder.Services.AddMediatR(cfg => 
             cfg.RegisterServicesFromAssembly(typeof(StartParsingCommand).Assembly));
