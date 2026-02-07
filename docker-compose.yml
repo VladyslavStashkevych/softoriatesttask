@@ -11,6 +11,11 @@ services:
       volumes:
         - postgres_data:/var/lib/postgresql/data
         - ./infra/postgres:/docker-entrypoint-initdb.d
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U admin -d softoriatesttask"]
+        interval: 5s
+        timeout: 5s
+        retries: 5
 
   pgadmin:
     image: dpage/pgadmin4
@@ -46,6 +51,9 @@ services:
     build:
       context: .
       dockerfile: Services/ParserService/Web/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
     ports:
       - "5001:8080"
     environment:
@@ -58,6 +66,7 @@ services:
       dockerfile: Services/ProcessorService/Worker/Dockerfile
     depends_on:
       - kafka
+      - db
     environment:
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=softoriatesttask;Username=admin;Password=admin
       - Kafka__BootstrapServers=kafka:29092

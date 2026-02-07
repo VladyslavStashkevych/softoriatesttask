@@ -4,6 +4,7 @@ using SoftoriaTestTask.Services.ParserService.Application.Commands;
 using SoftoriaTestTask.Services.ParserService.Domain.Interfaces;
 using SoftoriaTestTask.Services.ParserService.Domain.Models;
 using SoftoriaTestTask.Services.ParserService.Infrastructure.Constants;
+using SoftoriaTestTask.Services.ParserService.Infrastructure.Helpers;
 using SoftoriaTestTask.Shared.Domain.Models;
 
 namespace SoftoriaTestTask.Services.ParserService.Infrastructure;
@@ -11,13 +12,12 @@ namespace SoftoriaTestTask.Services.ParserService.Infrastructure;
 public class ParserService : IParserService, IAsyncDisposable
 {
     private IPage? _page;
-    private IBrowser _browser;
-    private IBrowserContext? _context;
+    private BrowserManager _browserManager;
     private readonly IMediator _mediator;
 
-    public ParserService(IBrowser browser, IMediator mediator)
+    public ParserService(BrowserManager browserManager, IMediator mediator)
     {
-        _browser = browser;
+        _browserManager = browserManager;
         _mediator = mediator;
     }
 
@@ -51,7 +51,7 @@ public class ParserService : IParserService, IAsyncDisposable
 
             return $"Success: {maxProcessedRank} coins captured.";
         }
-        // TODO: make more exceptions
+        // TODO: handle more exceptions
         catch (Exception ex)
         {
             return $"Failed at rank {maxProcessedRank}: {ex.Message}";
@@ -64,12 +64,7 @@ public class ParserService : IParserService, IAsyncDisposable
 
     public async Task InitializeAsync()
     {
-        _context = await _browser.NewContextAsync(new BrowserNewContextOptions
-        {
-            ViewportSize = new ViewportSize { Width = 1920, Height = 5000 }
-        });
-
-        _page = await _context.NewPageAsync();
+        _page = await _browserManager.GetPageAsync();
 
         // Traffic minimization logic
         var blocked = new[] { "image", "media", "font", "stylesheet", "other" };
@@ -85,11 +80,6 @@ public class ParserService : IParserService, IAsyncDisposable
     public async ValueTask DisposeAsync()
     {
         if (_page != null) await _page.CloseAsync();
-        if (_context != null)
-        {
-            await _context.CloseAsync();
-            await _context.DisposeAsync();
-        }
         
         GC.Collect(0);
         GC.SuppressFinalize(this);
@@ -149,7 +139,7 @@ public class ParserService : IParserService, IAsyncDisposable
         
         // if we are here, then current batch is either empty or it has last <200 elements
         await _mediator.Send(new IngestBatchCommand(currentBatch));
-        currentBatch = new List<CoinData>(200);
+        currentBatch.Clear();
 
         return false;
     }
@@ -158,7 +148,6 @@ public class ParserService : IParserService, IAsyncDisposable
     private async Task RecycleSessionAsync(int currentMaxRank)
     {
         if (_page != null) await _page.CloseAsync();
-        if (_context != null) await _context.DisposeAsync();
 
         GC.Collect();
         GC.WaitForPendingFinalizers();

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Playwright;
 using SoftoriaTestTask.Services.ParserService.Application.Commands;
 using SoftoriaTestTask.Services.ParserService.Domain.Interfaces;
+using SoftoriaTestTask.Services.ParserService.Infrastructure.Helpers;
 using SoftoriaTestTask.Services.ParserService.Web.Middleware;
 using SoftoriaTestTask.Shared.Domain.Interfaces;
 using SoftoriaTestTask.Shared.Infrastructure.Persistence;
@@ -25,20 +26,7 @@ public class Program
         builder.Services.AddScoped<IOutboxRepository, OutboxRepository>();
         builder.Services.AddScoped<IParserService, Infrastructure.ParserService>();
         builder.Services.AddSingleton<IPlaywright>(sp => Playwright.CreateAsync().GetAwaiter().GetResult());
-        builder.Services.AddSingleton<IBrowser>(sp => 
-        {
-            var playwright = sp.GetRequiredService<IPlaywright>();
-            return playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-            {
-                Headless = true,
-                Devtools = false,
-                Args =
-                [
-                    "--disable-dev-shm-usage", "--disable-gpu", "--no-sandbox", 
-                    "--single-process", "--disable-extensions"
-                ]
-            }).GetAwaiter().GetResult();
-        });
+        builder.Services.AddSingleton<BrowserManager>();
         
         var app = builder.Build();
         

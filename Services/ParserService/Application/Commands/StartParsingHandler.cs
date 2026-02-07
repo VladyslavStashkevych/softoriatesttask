@@ -14,7 +14,6 @@ public class StartParsingHandler : IRequestHandler<StartParsingCommand, string>
 
     public async Task<string> Handle(StartParsingCommand request, CancellationToken cancellationToken)
     {
-        // This calls the 'ExecuteScrapeAsync' method we built earlier
         return await _parserService.ExecuteParseAsync();
     }
 }

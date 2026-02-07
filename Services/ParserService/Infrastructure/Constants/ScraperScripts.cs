@@ -21,15 +21,15 @@ internal static class ScraperScripts
 
                 // loaded rows only
                 if (rankEl && nameEl && mCapEl && mCapEl.innerText.trim() !== '') {
-                const price = pricEl.innerText.replace(/[$,?-<>]/g, '').trim();
-                const marketCap = mCapEl.innerText.replace(/[$,?-<>]/g, '').trim();
-                const volume24h = voluEl.innerText.replace(/[$,?-<>]/g, '').trim();
-                const change24h = chanEl.innerText.replace(/[,?%<>-]/g, '').trim();
+                const price = pricEl.innerText.replace(/[$,?<>-]/g, '').trim();
+                const marketCap = mCapEl.innerText.replace(/[$,?<>-]/g, '').trim();
+                const volume24h = voluEl.innerText.replace(/[$,?<>-]/g, '').trim();
+                const change24h = chanEl.innerText.replace(/[,?%<>]/g, '').trim();
                     batch.push({
                         rank: rankEl.innerText.trim(),
                         name: nameEl.innerText.trim(),
                         symbol: symbEl.innerText.trim(),
-                        price: pricEl.innerText.trim(),
+                        price: price == '' ? 0 : price,
                         marketCap: marketCap == '' ? '0' : marketCap,
                         volume24h: volume24h == '' ? '0' : volume24h,
                         change24h: change24h == '' ? '0' : change24h
