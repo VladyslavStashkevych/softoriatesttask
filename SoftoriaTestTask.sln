@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-#
+# 
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{3CEE46A8-2582-4BF2-9477-0CC3EF516652}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ParserService", "ParserService", "{D11DBE16-B2E8-4D35-A6C5-A4E0066E5778}"
@@ -32,6 +32,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftoriaTestTask.Services.ConsumerService.Worker", "Services\ConsumerService\Worker\SoftoriaTestTask.Services.ConsumerService.Worker.csproj", "{CC9E8E6A-D966-42AE-94BE-CA2F80EF2F5E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftoriaTestTask.Services.ConsumerService.Infrastructure", "Services\ConsumerService\Infrastructure\SoftoriaTestTask.Services.ConsumerService.Infrastructure.csproj", "{576820DA-1F99-4578-9673-C57EC9418400}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiService", "ApiService", "{496C1BC1-1E93-4CE5-8F6A-4E02C35BA12B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftoriaTestTask.Services.ApiService.Web", "Services\ApiService\Web\SoftoriaTestTask.Services.ApiService.Web.csproj", "{5DE37ED9-FBB4-4373-8E52-738CFA90B6EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftoriaTestTask.Services.ApiService.Infrastructure", "Services\ApiService\Infrastructure\SoftoriaTestTask.Services.ApiService.Infrastructure.csproj", "{24E5C622-C2D9-4D72-8417-A6EA48F41DF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +89,14 @@ Global
 		{576820DA-1F99-4578-9673-C57EC9418400}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{576820DA-1F99-4578-9673-C57EC9418400}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{576820DA-1F99-4578-9673-C57EC9418400}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DE37ED9-FBB4-4373-8E52-738CFA90B6EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DE37ED9-FBB4-4373-8E52-738CFA90B6EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DE37ED9-FBB4-4373-8E52-738CFA90B6EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DE37ED9-FBB4-4373-8E52-738CFA90B6EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24E5C622-C2D9-4D72-8417-A6EA48F41DF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24E5C622-C2D9-4D72-8417-A6EA48F41DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24E5C622-C2D9-4D72-8417-A6EA48F41DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24E5C622-C2D9-4D72-8417-A6EA48F41DF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D11DBE16-B2E8-4D35-A6C5-A4E0066E5778} = {3CEE46A8-2582-4BF2-9477-0CC3EF516652}
@@ -99,5 +113,8 @@ Global
 		{3E6327B4-E534-4611-A86B-60A49B368C10} = {3CEE46A8-2582-4BF2-9477-0CC3EF516652}
 		{CC9E8E6A-D966-42AE-94BE-CA2F80EF2F5E} = {3E6327B4-E534-4611-A86B-60A49B368C10}
 		{576820DA-1F99-4578-9673-C57EC9418400} = {3E6327B4-E534-4611-A86B-60A49B368C10}
+		{496C1BC1-1E93-4CE5-8F6A-4E02C35BA12B} = {3CEE46A8-2582-4BF2-9477-0CC3EF516652}
+		{5DE37ED9-FBB4-4373-8E52-738CFA90B6EB} = {496C1BC1-1E93-4CE5-8F6A-4E02C35BA12B}
+		{24E5C622-C2D9-4D72-8417-A6EA48F41DF7} = {496C1BC1-1E93-4CE5-8F6A-4E02C35BA12B}
 	EndGlobalSection
 EndGlobal

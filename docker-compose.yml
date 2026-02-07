@@ -82,5 +82,17 @@ services:
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=softoriatesttask;Username=admin;Password=admin;
       - Kafka__BootstrapServers=kafka:29092
 
+  api-service:
+    build:
+      context: .
+      dockerfile: Services/ApiService/Web/Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=softoriatesttask;Username=admin;Password=admin
+
 volumes:
   postgres_data:

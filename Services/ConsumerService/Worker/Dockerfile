@@ -1,8 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-COPY ["Shared/Domain/SoftoriaTestTask.Shared.Domain.csproj", "Shared/Shared.Domain/"]
-COPY ["Shared/Infrastructure/SoftoriaTestTask.Shared.Infrastructure.csproj", "Shared/Shared.Infrastructure/"]
+COPY ["Shared/Domain/SoftoriaTestTask.Shared.Domain.csproj", "Shared/Domain/"]
+COPY ["Shared/Infrastructure/SoftoriaTestTask.Shared.Infrastructure.csproj", "Shared/Infrastructure/"]
 
 # Copy Consumer Projects
 COPY ["Services/ConsumerService/Worker/SoftoriaTestTask.Services.ConsumerService.Worker.csproj", "Services/ConsumerService/Worker/"]

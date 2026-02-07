@@ -25,7 +25,6 @@ public class Program
         
         builder.Services.AddScoped<IOutboxRepository, OutboxRepository>();
         builder.Services.AddScoped<IParserService, Infrastructure.ParserService>();
-        builder.Services.AddSingleton<IPlaywright>(sp => Playwright.CreateAsync().GetAwaiter().GetResult());
         builder.Services.AddSingleton<BrowserManager>();
         
         var app = builder.Build();

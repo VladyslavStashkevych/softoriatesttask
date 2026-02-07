@@ -1,4 +1,4 @@
--- 0001-add-unique-CoinPrices.sql
+-- 0002-CoinPrices-constraint-index.sql
 ALTER TABLE "CoinPrices"
 ADD CONSTRAINT UQ_Coin_Timestamp UNIQUE ("Symbol", "SavedAt");
 

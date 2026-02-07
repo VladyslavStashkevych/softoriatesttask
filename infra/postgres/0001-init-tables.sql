@@ -1,3 +1,4 @@
+-- 0001-init-tables.sql
 CREATE TABLE IF NOT EXISTS "CoinPrices" (
     "Id" UUID PRIMARY KEY,
     "SavedAt" TIMESTAMP WITH TIME ZONE NOT NULL,

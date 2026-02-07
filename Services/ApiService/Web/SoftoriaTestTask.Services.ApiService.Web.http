@@ -1,0 +1,6 @@
+@SoftoriaTestTask.Services.ApiService.Web_HostAddress = http://localhost:5086
+
+GET {{SoftoriaTestTask.Services.ApiService.Web_HostAddress}}/api/
+Accept: application/json
+
+###
